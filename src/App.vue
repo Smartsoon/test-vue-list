@@ -1,13 +1,16 @@
 <script setup lang="ts">
-
+import MainLayout from "@/widgets/MainLayout.vue";
+import StyledButton from "@/ui/StyledButton.vue";
 </script>
 
 <template>
   <div>
-    Hello World
+    <main-layout>
+      <styled-button/>
+    </main-layout>
   </div>
 </template>
 
-<style>
+<style lang="scss">
 
 </style>
