@@ -1,12 +1,17 @@
-<script setup lang="ts">
-import MainLayout from "@/widgets/MainLayout.vue";
-import StyledButton from "@/ui/StyledButton.vue";
+<script lang="ts">
+import { defineComponent } from 'vue'
+import MainLayout from '@/layouts/MainLayout.vue'
+
+export default defineComponent({
+  name: 'App',
+  components: { MainLayout }
+})
 </script>
 
 <template>
   <div>
     <main-layout>
-      <styled-button/>
+      <router-view/>
     </main-layout>
   </div>
 </template>
