@@ -15,6 +15,7 @@ export interface CharactersState {
   page: number;
   perPage: number;
   totalItems: number;
+  notFound: boolean
 }
 
 export interface CharactersModule extends Module<CharactersState, RootState> {
@@ -23,6 +24,7 @@ export interface CharactersModule extends Module<CharactersState, RootState> {
     setCharacters(state: CharactersState, characters: CharacterListCard[]): void;
     setCharacterItem(state: CharactersState, character: CharacterItem): void;
     setLoading(state: CharactersState, bool: boolean): void;
+    setNotFound(state: CharactersState, bool: boolean): void;
     setPage(state: CharactersState, page: number): void;
     setTotalItems(state: CharactersState, totalItems: number): void;
   };
@@ -37,6 +39,7 @@ const charactersModule: CharactersModule = {
   state: () => ({
     characters: [],
     character: null,
+    notFound: false,
     isCharactersLoading: false,
     page: 1,
     perPage: 20,
@@ -51,6 +54,9 @@ const charactersModule: CharactersModule = {
     },
     setLoading(state, bool) {
       state.isCharactersLoading = bool;
+    },
+    setNotFound(state, bool) {
+      state.notFound = bool;
     },
     setPage(state, page) {
       state.page = page;
@@ -68,6 +74,12 @@ const charactersModule: CharactersModule = {
     },
     characterImage(state) {
       return state.character?.image
+    },
+    notFound(state) {
+      return state.notFound
+    },
+    loading(state) {
+      return state.isCharactersLoading
     },
   },
   actions: {
@@ -95,13 +107,14 @@ const charactersModule: CharactersModule = {
         commit('setLoading', true);
         const response = await getCharacter(data?.id);
         if (response) {
-          console.log(response)
           commit('setCharacterItem', normalizeCharacterItem(response.data));
+          commit('setNotFound', false);
         }
       } catch (e) {
         if (axios.isAxiosError(e)) {
           if (e?.response?.data.error === 'Character not found') {
             commit('setCharacterItem', null);
+            commit('setNotFound', true);
           }
         }
       } finally {

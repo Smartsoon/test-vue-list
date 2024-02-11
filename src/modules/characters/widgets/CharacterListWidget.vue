@@ -38,6 +38,7 @@ import { ref, onMounted, computed, watch } from 'vue'
     store.dispatch('characters/fetchCharacters').then(() => {
       totalItems.value = store.state.characters.totalItems
     })
+    store.commit('characters/setCharacterItem', null);
   })
   const pageClick = (event: PageState) => {
     store.dispatch('characters/fetchCharacters', {
