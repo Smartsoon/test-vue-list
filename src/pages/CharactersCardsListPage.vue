@@ -1,5 +1,5 @@
 <template>
-    <CharacterListWidget/>
+  <CharacterListWidget />
 </template>
 
 <script lang="ts">
@@ -11,7 +11,3 @@ export default defineComponent({
   components: { CharacterListWidget }
 })
 </script>
-
-<style lang="scss" scoped>
-
-</style>

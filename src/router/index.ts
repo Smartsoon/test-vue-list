@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 const CharacterItemPage = () => import('@/pages/CharacterItemPage.vue')
 const CharactersCardsListPage = () => import('@/pages/CharactersCardsListPage.vue')
 
@@ -12,7 +13,7 @@ const router = createRouter({
     {
       path: '/character/:id',
       component: CharacterItemPage
-    },
+    }
   ]
 })
 

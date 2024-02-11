@@ -6,10 +6,10 @@ export const normalizeCharactersToValueList = (item: CharacterItem): ValuesList[
   return Object.entries(item)
     .filter(value => value[0] !== 'image')
     .map((value: [string, string], index) => {
-    return {
-      index: index,
-      value: value[1],
-      label: capitalizeFirstLetter(value[0])
-    }
-  })
+      return {
+        index: index,
+        value: value[1],
+        label: capitalizeFirstLetter(value[0])
+      }
+    })
 }

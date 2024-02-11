@@ -1,13 +1,13 @@
 <template>
-    <main>
-      <header/>
-      <slot/>
-    </main>
+  <main>
+    <header />
+    <slot />
+  </main>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'MainLayout',
+  name: 'MainLayout'
 }
 </script>
 
@@ -22,6 +22,7 @@ main {
     left: 0;
     z-index: 99;
   }
+
   padding: 6rem 2rem 2rem 2rem;
   @media (max-width: 768px) {
     padding: 6rem 0.5rem 0.5rem 0.5rem;

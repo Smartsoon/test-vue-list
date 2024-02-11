@@ -1,8 +1,8 @@
-import type { Module, ActionContext } from 'vuex';
-import { getCharacterList } from '@/modules/characters/api/requests/getPaginatedCharactersList';
+import type { Module, ActionContext } from 'vuex'
+import { getCharacterList } from '@/modules/characters/api/requests/getPaginatedCharactersList'
 import type { CharacterItem, CharacterListCard } from '@/modules/characters/types'
-import { normalizeCharactersList } from '@/modules/characters/utils/normalizeCharactersList';
-import axios from 'axios';
+import { normalizeCharactersList } from '@/modules/characters/utils/normalizeCharactersList'
+import axios from 'axios'
 import type { RootState } from '@/store'
 import { getCharacter } from '@/modules/characters/api/requests/getCharacter'
 import { normalizeCharacterItem } from '@/modules/characters/utils/normalizeCharacterItem'
@@ -29,7 +29,10 @@ export interface CharactersModule extends Module<CharactersState, RootState> {
     setTotalItems(state: CharactersState, totalItems: number): void;
   };
   actions: {
-    fetchCharacters(context: ActionContext<CharactersState, RootState>, data?: { page: number; queryString?: string }): Promise<void>;
+    fetchCharacters(context: ActionContext<CharactersState, RootState>, data?: {
+      page: number;
+      queryString?: string
+    }): Promise<void>;
     fetchCharacterItem(context: ActionContext<CharactersState, RootState>, data: { id: number }): Promise<void>;
   };
   namespaced: true;
@@ -43,31 +46,31 @@ const charactersModule: CharactersModule = {
     isCharactersLoading: false,
     page: 1,
     perPage: 20,
-    totalItems: 0,
+    totalItems: 0
   }),
   mutations: {
     setCharacters(state, characters) {
-      state.characters = characters;
+      state.characters = characters
     },
     setCharacterItem(state, character) {
-      state.character = character;
+      state.character = character
     },
     setLoading(state, bool) {
-      state.isCharactersLoading = bool;
+      state.isCharactersLoading = bool
     },
     setNotFound(state, bool) {
-      state.notFound = bool;
+      state.notFound = bool
     },
     setPage(state, page) {
-      state.page = page;
+      state.page = page
     },
     setTotalItems(state, totalItems) {
-      state.totalItems = totalItems;
-    },
+      state.totalItems = totalItems
+    }
   },
   getters: {
     charactersList(state) {
-      return [...state.characters].map(data => data);
+      return [...state.characters].map(data => data)
     },
     characterValueList(state) {
       return state.character ? normalizeCharactersToValueList({ ...state.character }) : []
@@ -80,49 +83,49 @@ const charactersModule: CharactersModule = {
     },
     loading(state) {
       return state.isCharactersLoading
-    },
+    }
   },
   actions: {
     async fetchCharacters({ state, commit }, data) {
       try {
-        commit('setLoading', true);
-        const response = await getCharacterList(data?.page || state.page, data?.queryString || '');
+        commit('setLoading', true)
+        const response = await getCharacterList(data?.page || state.page, data?.queryString || '')
         if (response) {
-          commit('setTotalItems', response.data.info.count);
-          commit('setCharacters', normalizeCharactersList(response?.data?.results));
+          commit('setTotalItems', response.data.info.count)
+          commit('setCharacters', normalizeCharactersList(response?.data?.results))
         }
       } catch (e) {
         if (axios.isAxiosError(e)) {
           if (e?.response?.data.error === 'There is nothing here') {
-            commit('setTotalItems', 0);
-            commit('setCharacters', []);
+            commit('setTotalItems', 0)
+            commit('setCharacters', [])
           }
         }
       } finally {
-        commit('setLoading', false);
+        commit('setLoading', false)
       }
     },
     async fetchCharacterItem({ state, commit }, data) {
       try {
-        commit('setLoading', true);
-        const response = await getCharacter(data?.id);
+        commit('setLoading', true)
+        const response = await getCharacter(data?.id)
         if (response) {
-          commit('setCharacterItem', normalizeCharacterItem(response.data));
-          commit('setNotFound', false);
+          commit('setCharacterItem', normalizeCharacterItem(response.data))
+          commit('setNotFound', false)
         }
       } catch (e) {
         if (axios.isAxiosError(e)) {
           if (e?.response?.data.error === 'Character not found') {
-            commit('setCharacterItem', null);
-            commit('setNotFound', true);
+            commit('setCharacterItem', null)
+            commit('setNotFound', true)
           }
         }
       } finally {
-        commit('setLoading', false);
+        commit('setLoading', false)
       }
-    },
+    }
   },
-  namespaced: true,
-};
+  namespaced: true
+}
 
-export default charactersModule;
+export default charactersModule

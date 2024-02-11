@@ -29,14 +29,17 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+
     h3,
     p {
       max-width: calc(50% - 10px);
       white-space: nowrap;
     }
+
     h3 {
       justify-self: start;
     }
+
     p {
       justify-self: start;
     }

@@ -1,13 +1,13 @@
 <template>
   <div class="characters-list">
-    <div v-show="!isLoading" class="characters-list__items">
+    <div v-if="!isLoading" class="characters-list__items">
       <CharacterListCard
         v-for="character in characters"
         :character="character"
         :key="character.id"
       />
     </div>
-    <div v-show="isLoading" class="characters-list__spinner">
+    <div v-if="isLoading" class="characters-list__spinner">
       <PrimeSpinner />
     </div>
   </div>
@@ -34,6 +34,7 @@ const characters = computed(() => store.state.characters.characters)
     flex-basis: 20rem;
     flex-wrap: wrap;
   }
+
   &__spinner {
     display: flex;
     justify-content: center;

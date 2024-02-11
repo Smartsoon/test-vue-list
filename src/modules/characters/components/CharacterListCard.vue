@@ -1,7 +1,7 @@
 <template>
-  <PrimeCard class="character-list-card" >
+  <PrimeCard class="character-list-card">
     <template #header>
-      <img alt="user header" :src="character.image"/>
+      <img alt="user header" :src="character.image" />
     </template>
     <template #title>
       <div v-truncate-lines="1">
@@ -27,6 +27,7 @@
 import { defineComponent, type PropType } from 'vue'
 import type { CharacterListCard } from '@/modules/characters/types'
 import truncateLines from '@/directives/truncateLines'
+
 export default defineComponent({
   name: 'CharacterListCard',
   props: {
@@ -42,7 +43,7 @@ export default defineComponent({
     return {
       route: `/character/${this.character.id}`
     }
-  },
+  }
 })
 </script>
 
@@ -52,9 +53,11 @@ export default defineComponent({
   height: auto;
   overflow: hidden;
   margin: 1rem;
+
   img {
     width: 20rem;
   }
+
   @media (max-width: 400px) {
     margin: 0;
     background: red

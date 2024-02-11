@@ -2,11 +2,11 @@
   <div class="flex flex-column">
     <div class="flex flex-column">
       <router-link to="/">
-        <PrimeButton label="Back"/>
+        <PrimeButton label="Back" />
       </router-link>
     </div>
     <div class="w-full flex justify-content-center mt-5">
-      <CharacterWidget/>
+      <CharacterWidget />
     </div>
   </div>
 </template>
@@ -15,7 +15,3 @@
 
 import CharacterWidget from '@/modules/characters/widgets/CharacterWidget.vue'
 </script>
-
-<style lang="scss" scoped>
-
-</style>
