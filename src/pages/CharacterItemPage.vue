@@ -12,6 +12,5 @@
 </template>
 
 <script setup lang="ts">
-
 import CharacterWidget from '@/modules/characters/widgets/CharacterWidget.vue'
 </script>

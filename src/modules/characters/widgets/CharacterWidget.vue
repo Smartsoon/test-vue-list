@@ -1,47 +1,40 @@
 <template>
   <div class="character-widget">
-    <img v-if="image" :src="image" alt="image">
+    <img class="w-full h-auto" v-if="image" :src="image" alt="image" />
     <ValueList v-if="character" :values="character" />
 
-    <h2 v-if="notFound"
-        class="flex justify-content-center"
-    >
-      Character not found
-    </h2>
+    <h2 v-if="notFound" class="flex justify-content-center">Character not found</h2>
     <div v-if="isLoading" class="character-widget__spinner">
-      <PrimeSpinner />
+      <PrimeSpinner class="flex justify-content-center align-items-center" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, watch } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 import ValueList from '@/ui/ValueList.vue'
-import { key } from '@/store'
+import { useCharactersStore } from '@/modules/characters/store/characters'
 
-const store = useStore(key)
+const charactersStore = useCharactersStore()
 const router = useRoute()
 
-const character = computed(() => store.getters['characters/characterValueList'])
-const image = computed(() => store.getters['characters/characterImage'])
-const isLoading = computed(() => store.getters['characters/loading'])
-const notFound = computed(() => store.getters['characters/notFound'])
+const character = computed(() => charactersStore.getCharacterValueList)
+const image = computed(() => charactersStore.getCharacterImage)
+const isLoading = computed(() => charactersStore.getIsLoading)
+const notFound = computed(() => charactersStore.getIsNotFound)
 
 onMounted(() => {
-  if (typeof router?.params?.id === 'string' && isNaN((parseInt(router?.params?.id)))) {
-    return store.commit('characters/setNotFound', true)
+  if (typeof router?.params?.id === 'string' && !isNaN(parseInt(router?.params?.id))) {
+    charactersStore.fetchCharacterItem({ id: router.params.id })
+  } else {
+    charactersStore.$patch({ notFound: true })
   }
-  store.dispatch('characters/fetchCharacterItem', {
-    id: router.params.id
-  })
-})
-1
-onUnmounted(() => {
-  store.commit('characters/setCharacterItem', null)
 })
 
+onUnmounted(() => {
+  charactersStore.$patch({ character: null })
+})
 </script>
 
 <style lang="scss" scoped>
@@ -49,17 +42,11 @@ onUnmounted(() => {
   width: 500px;
 
   img {
-    max-width: 100%;
     width: 500px;
-    height: auto;
   }
 
   &__spinner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-top: 15rem;
   }
 }
-
 </style>

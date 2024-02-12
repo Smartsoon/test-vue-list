@@ -8,8 +8,7 @@ export interface CharactersRequest {
   results: Character[]
 }
 
-export interface CharacterRequest extends Character {
-}
+export interface CharacterRequest extends Character {}
 
 export interface RequestInfo {
   count: number

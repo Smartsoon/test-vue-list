@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter'
 
 export const normalizeCharactersToValueList = (item: CharacterItem): ValuesList[] => {
   return Object.entries(item)
-    .filter(value => value[0] !== 'image')
+    .filter((value) => value[0] !== 'image')
     .map((value: [string, string], index) => {
       return {
         index: index,

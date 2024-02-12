@@ -1,5 +1,5 @@
 <template>
-  <PrimeCard class="character-list-card">
+  <PrimeCard class="character-list-card h-auto overflow-hidden">
     <template #header>
       <img alt="user header" :src="character.image" />
     </template>
@@ -47,11 +47,9 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .character-list-card {
   width: 20rem;
-  height: auto;
-  overflow: hidden;
   margin: 1rem;
 
   img {
@@ -60,7 +58,6 @@ export default defineComponent({
 
   @media (max-width: 400px) {
     margin: 0;
-    background: red
   }
 }
 </style>
